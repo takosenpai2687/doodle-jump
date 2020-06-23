@@ -31,16 +31,34 @@ const sound = {
  * For loading static resources before setup
  */
 function preload() {
-  Doodler.leftImage = loadImage("../assets/img/doodler_left.png");
-  Doodler.rightImage = loadImage("../assets/img/doodler_right.png");
-  Platform.springImage = loadImage("../assets/img/spring.png");
-  Blackhole.blackholeImg = loadImage("../assets/img/hole.png");
+  Doodler.leftImage = loadImage(
+    "https://jeremy9863.github.io/doodlejump/assets/img/doodler_left.png"
+  );
+  Doodler.rightImage = loadImage(
+    "https://jeremy9863.github.io/doodlejump/assets/img/doodler_right.png"
+  );
+  Platform.springImage = loadImage(
+    "https://jeremy9863.github.io/doodlejump/assets/img/spring.png"
+  );
+  Blackhole.blackholeImg = loadImage(
+    "https://jeremy9863.github.io/doodlejump/assets/img/hole.png"
+  );
   soundFormats("mp3", "wav");
-  sound.blackhole = loadSound("../assets/sound/blackhole.mp3");
-  sound.jump = loadSound("../assets/sound/jump.wav");
-  sound.spring = loadSound("../assets/sound/spring.mp3");
-  sound.fragile = loadSound("../assets/sound/fragile.mp3");
-  sound.falling = loadSound("../assets/sound/falling.mp3");
+  sound.blackhole = loadSound(
+    "https://jeremy9863.github.io/doodlejump/assets/sound/blackhole.mp3"
+  );
+  sound.jump = loadSound(
+    "https://jeremy9863.github.io/doodlejump/assets/sound/jump.wav"
+  );
+  sound.spring = loadSound(
+    "https://jeremy9863.github.io/doodlejump/assets/sound/spring.mp3"
+  );
+  sound.fragile = loadSound(
+    "https://jeremy9863.github.io/doodlejump/assets/sound/fragile.mp3"
+  );
+  sound.falling = loadSound(
+    "https://jeremy9863.github.io/doodlejump/assets/sound/falling.mp3"
+  );
 }
 
 /**
