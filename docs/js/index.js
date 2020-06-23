@@ -35,7 +35,7 @@ const sound = {
  * For loading static resources before setup
  */
 function preload() {
-  const baseUrl = "https://jeremy9863.github.io/doodlejump/";
+  const baseUrl = "https://jeremy9863.github.io/doodlejump";
   Doodler.leftImage = loadImage(baseUrl + "/assets/img/doodler_left.png");
   Doodler.rightImage = loadImage(baseUrl + "/assets/img/doodler_right.png");
   Platform.springImage = loadImage(baseUrl + "/assets/img/spring.png");

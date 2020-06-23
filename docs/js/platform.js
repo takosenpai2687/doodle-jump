@@ -3,7 +3,7 @@ class Platform {
   static w = 80;
   static h = 20;
   // Horizontal speed scalar
-  static speed = 1;
+  static speed = 2;
   // Spring dimensions
   static springW = 15;
   static springH = 12;
