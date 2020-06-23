@@ -16,7 +16,11 @@ var isOver = false;
 // Is dead from blackhole
 var isBlackholed = false;
 // Vertical distance between adjacent platforms
-var step_size;
+var stepSize;
+// Mobile detection
+var isMobile;
+// Background grid cell size
+var cell;
 
 const sound = {
   blackhole: null,
@@ -31,34 +35,17 @@ const sound = {
  * For loading static resources before setup
  */
 function preload() {
-  Doodler.leftImage = loadImage(
-    "https://jeremy9863.github.io/doodlejump/assets/img/doodler_left.png"
-  );
-  Doodler.rightImage = loadImage(
-    "https://jeremy9863.github.io/doodlejump/assets/img/doodler_right.png"
-  );
-  Platform.springImage = loadImage(
-    "https://jeremy9863.github.io/doodlejump/assets/img/spring.png"
-  );
-  Blackhole.blackholeImg = loadImage(
-    "https://jeremy9863.github.io/doodlejump/assets/img/hole.png"
-  );
+  const baseUrl = "https://jeremy9863.github.io/doodlejump/";
+  Doodler.leftImage = loadImage(baseUrl + "/assets/img/doodler_left.png");
+  Doodler.rightImage = loadImage(baseUrl + "/assets/img/doodler_right.png");
+  Platform.springImage = loadImage(baseUrl + "/assets/img/spring.png");
+  Blackhole.blackholeImg = loadImage(baseUrl + "/assets/img/hole.png");
   soundFormats("mp3", "wav");
-  sound.blackhole = loadSound(
-    "https://jeremy9863.github.io/doodlejump/assets/sound/blackhole.mp3"
-  );
-  sound.jump = loadSound(
-    "https://jeremy9863.github.io/doodlejump/assets/sound/jump.wav"
-  );
-  sound.spring = loadSound(
-    "https://jeremy9863.github.io/doodlejump/assets/sound/spring.mp3"
-  );
-  sound.fragile = loadSound(
-    "https://jeremy9863.github.io/doodlejump/assets/sound/fragile.mp3"
-  );
-  sound.falling = loadSound(
-    "https://jeremy9863.github.io/doodlejump/assets/sound/falling.mp3"
-  );
+  sound.blackhole = loadSound(baseUrl + "/assets/sound/blackhole.mp3");
+  sound.jump = loadSound(baseUrl + "/assets/sound/jump.wav");
+  sound.spring = loadSound(baseUrl + "/assets/sound/spring.mp3");
+  sound.fragile = loadSound(baseUrl + "/assets/sound/fragile.mp3");
+  sound.falling = loadSound(baseUrl + "/assets/sound/falling.mp3");
 }
 
 /**
@@ -66,8 +53,9 @@ function preload() {
  * Initialization
  */
 function setup() {
-  createCanvas((windowHeight * 9) / 16, windowHeight);
   frameRate(config.FPS);
+  createCanvas(windowWidth, windowHeight);
+  windowResized();
   generatePlatforms();
   doodler = new Doodler(
     platforms[platforms.length - 2].x,
@@ -172,7 +160,7 @@ function draw() {
             // Random  x
             let x = Platform.w / 2 + (width - Platform.w) * Math.random();
             // One screen height off for y
-            let y = plat.y - height - step_size;
+            let y = plat.y - height - stepSize;
             // Random type
             let type = Platform.platformTypes.getRandomType();
             // Random springed
@@ -235,11 +223,40 @@ function keyReleased() {
 }
 
 /**
+ * Touch event mobile
+ */
+function touchStarted() {
+  // LEFT
+  if (mouseX < width / 2 && doodler.vx !== -Doodler.speed) {
+    doodler.vx = -Doodler.speed;
+    doodler.direction = Doodler.Direction.LEFT;
+  } else if (mouseX >= width / 2 && doodler.vx !== Doodler.speed) {
+    // RIGHT
+    doodler.vx = Doodler.speed;
+    doodler.direction = Doodler.Direction.RIGHT;
+  }
+}
+
+/**
+ * Touch end event mobile
+ */
+function touchEnded() {
+  if (doodler.vx != 0) {
+    doodler.vx = 0;
+  }
+}
+
+/**
  * Window resized event hook, keep 16:9
  */
 function windowResized() {
-  step_size = windowHeight / config.STEPS;
-  resizeCanvas((windowHeight * 9) / 16, windowHeight);
+  console.log("hi");
+  stepSize = windowHeight / config.STEPS;
+  isMobile = window.matchMedia("only screen and (max-width: 768px)").matches;
+  if (!isMobile) {
+    resizeCanvas((windowHeight * 9) / 16, windowHeight);
+  }
+  cell = windowHeight / 30;
 }
 
 // utils
@@ -250,8 +267,7 @@ function windowResized() {
 function drawBackground() {
   background("#f5eee4");
   stroke(225, 125, 0);
-  strokeWeight(0.5);
-  const cell = config.CELL_SIZE;
+  strokeWeight(0.8);
   // horizontal lines
   for (let i = 0; i < height; i += cell) {
     line(0, i, width, i);
@@ -301,8 +317,8 @@ function checkCollision(doodler, platform) {
  * Generate platforms at startup
  */
 function generatePlatforms() {
-  step_size = Math.floor(height / config.STEPS);
-  for (let y = height; y > 0; y -= step_size) {
+  stepSize = Math.floor(height / config.STEPS);
+  for (let y = height; y > 0; y -= stepSize) {
     const x = Platform.w / 2 + (width - Platform.w) * Math.random();
     let type = Platform.platformTypes.getRandomType();
     while (type === Platform.platformTypes.FRAGILE) {

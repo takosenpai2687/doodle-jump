@@ -8,7 +8,13 @@ This project is a Javascript replica of the video game _Doodle Jump_ mentioned a
 
 # How to Play
 
+## For PC Users:
+
 Press LEFT and RIGHT Arrow for movement control of the doodler.
+
+## For Mobile Users and PC Users:
+
+Touch screen left part or right part to move the doodler.
 
 Jump on the platforms.
 
@@ -34,8 +40,14 @@ canvas, P5Js Library
 
 # Known Issues
 
-Window resize and mobile screen adaption.
-Mobile devices input events missing.
+Occasional minor bugs when window resized.
+iPad full screen support missing.
+
+# Updates
+
+## 2020.6.24 Project launched
+
+## 2020.6.24 Added mobile devices full screen and touch event support. Minor bug fixes.
 
 # Developer
 
@@ -45,4 +57,4 @@ Jeremy9863
 
 All sound files from https://www.sounds-resource.com/mobile/doodlejump/sound/1636/
 
-All art assets from random web search :D
+All art assets from random web search
