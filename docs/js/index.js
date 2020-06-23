@@ -21,6 +21,9 @@ var stepSize;
 var isMobile;
 // Background grid cell size
 var cell;
+// initial window height which is not affected by resizing
+// used for regenerating platforms at a constant rate
+var initHeight;
 
 const sound = {
   blackhole: null,
@@ -61,6 +64,7 @@ function setup() {
     platforms[platforms.length - 2].x,
     platforms[platforms.length - 2].y - Doodler.h / 2 - Platform.h / 2
   );
+  initHeight = height;
 }
 
 /**
@@ -160,7 +164,7 @@ function draw() {
             // Random  x
             let x = Platform.w / 2 + (width - Platform.w) * Math.random();
             // One screen height off for y
-            let y = plat.y - height - stepSize;
+            let y = plat.y - initHeight - stepSize;
             // Random type
             let type = Platform.platformTypes.getRandomType();
             // Random springed
