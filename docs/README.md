@@ -12,6 +12,8 @@ This project is a Javascript replica of the video game _Doodle Jump_ mentioned a
 
 Press LEFT and RIGHT Arrow for movement control of the doodler.
 
+Note that you can transport through the left and right screen and appear on the opposite side.
+
 ## For Mobile Users and PC Users:
 
 Touch screen left part or right part to move the doodler.
@@ -41,6 +43,7 @@ canvas, P5Js Library
 # Known Issues
 
 Occasional minor bugs when window resized.
+
 iPad full screen support missing.
 
 # Updates
