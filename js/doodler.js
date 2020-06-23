@@ -17,7 +17,7 @@ class Doodler {
   // Vertical spring jump force
   static superJumpForce = 10;
   // Horizontal speed scalar
-  static speed = 3;
+  static speed = 4;
 
   /**
    * Construct with position
