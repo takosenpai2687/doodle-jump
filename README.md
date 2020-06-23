@@ -20,6 +20,12 @@ There are 3 types of platforms to note:
     Blue : Moving platform.
     White : Fragile platform, vanish upon jumped on once.
 
+# How to Build
+
+1. Clone repository
+2. Open /index.html with VSCode
+3. Run with live server
+
 # Tech Specs
 
 HTML, CSS, Javascript
