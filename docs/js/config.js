@@ -3,9 +3,9 @@
  */
 const config = {
   // Frames per second, this will affect game speed as well
-  FPS: 45,
+  FPS: 70,
   // Gravity applied to doodler
-  GRAVITY: 0.17,
+  GRAVITY: 0.11,
   // Cell size for the background grid
   CELL_SIZE: 30,
   // Minimum value of the distance between Doodler and screen top
