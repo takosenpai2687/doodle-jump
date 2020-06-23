@@ -64,6 +64,8 @@ function setup() {
 function draw() {
   // Draw background
   drawBackground();
+  // Render blackhole
+  blackhole && blackhole.render();
   // Draw all platforms
   platforms.forEach(plat => {
     plat.render();
@@ -106,8 +108,6 @@ function draw() {
   });
   // Draw score
   drawScore();
-  // Render blackhole
-  blackhole && blackhole.render();
   if (!isOver) {
     // Render the doodler
     doodler.render();
