@@ -3,7 +3,7 @@ class Blackhole {
   static w = 40;
   static h = 40;
   // Minimum safe distance near blackhole
-  static ROCHE_LIMIT = Blackhole.h * 0.8;
+  static ROCHE_LIMIT = Blackhole.h * 0.75;
 
   constructor(x, y) {
     this.x = x;

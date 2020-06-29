@@ -48,9 +48,11 @@ iPad full screen support missing.
 
 # Updates
 
-## 2020.6.24 Project launched
+## 2020.06.29 Smoothened mobile experience by supporting touch moving. Optimized random platform generating distance. Made player falling speed faster than jumping up.
 
-## 2020.6.24 Added mobile devices full screen and touch event support. Minor bug fixes.
+## 2020.06.24 Added mobile devices full screen and touch event support. Minor bug fixes.
+
+## 2020.06.24 Project launched
 
 # Developer
 

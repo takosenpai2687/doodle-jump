@@ -63,7 +63,8 @@ class Doodler {
       this.x = width;
     }
     // Vertical move
-    this.vy += config.GRAVITY;
+    // Falls faster
+    this.vy += this.vy < 0 ? config.GRAVITY : config.GRAVITY * 1.33;
     this.y += this.vy;
     // Ensure below THRESHOLD=100
     if (this.y <= config.THRESHOLD) {
