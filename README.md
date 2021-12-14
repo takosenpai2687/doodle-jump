@@ -4,7 +4,7 @@ _Doodle Jump_ (https://en.wikipedia.org/wiki/Doodle_Jump) is a platforming video
 
 This project is a Javascript replica of the video game _Doodle Jump_ mentioned above. The project is mainly developed using Javascript with the help of p5Js library. _See also https://p5js.org/_
 
-# CLICK [HERE](https://jeremy9863.github.io/doodlejump/) TO PLAY ONLINE
+# CLICK [HERE](https://takosenpai2687.github.io/doodlejump/) TO PLAY ONLINE
 
 # How to Play
 
