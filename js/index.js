@@ -301,7 +301,7 @@ function drawScore() {
   text(scoreStr, width - strWidth - margin, margin + fontSize);
   // draw copy right
   textStyle(ITALIC);
-  text("Author: github.com/Jeremy9863", margin, height - margin);
+  text("Author: github.com/takosenpai2687", margin, height - margin);
   // draw FPS
   text("FPS: " + Math.floor(frameRate()) || 0, margin, height - 30);
 }
