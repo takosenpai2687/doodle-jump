@@ -35,7 +35,7 @@ const sound = {
  * For loading static resources before setup
  */
 function preload() {
-  const baseUrl = "https://jeremy9863.github.io/doodlejump";
+  const baseUrl = "https://takosenpai2687.github.io/doodlejump";
   Doodler.leftImage = loadImage(baseUrl + "/assets/img/doodler_left.png");
   Doodler.rightImage = loadImage(baseUrl + "/assets/img/doodler_right.png");
   Platform.springImage = loadImage(baseUrl + "/assets/img/spring.png");
@@ -301,7 +301,7 @@ function drawScore() {
   text(scoreStr, width - strWidth - margin, margin + fontSize);
   // draw copy right
   textStyle(ITALIC);
-  text("Author: github.com/Jeremy9863", margin, height - margin);
+  text("Author: github.com/takosenpai2687", margin, height - margin);
   // draw FPS
   text("FPS: " + Math.floor(frameRate()) || 0, margin, height - 30);
 }
