@@ -203,10 +203,10 @@ function draw() {
  */
 function keyPressed() {
     if (isOver) return;
-    if (keyCode === LEFT_ARROW && doodler.vx !== -Doodler.speed) {
+    if ((keyCode === LEFT_ARROW || keyCode === 65) && doodler.vx !== -Doodler.speed) {
         doodler.vx = -Doodler.speed;
         doodler.direction = Doodler.Direction.LEFT;
-    } else if (keyCode === RIGHT_ARROW && doodler.vx !== Doodler.speed) {
+    } else if ((keyCode === RIGHT_ARROW || keyCode === 68) && doodler.vx !== Doodler.speed) {
         doodler.vx = Doodler.speed;
         doodler.direction = Doodler.Direction.RIGHT;
     }
@@ -217,10 +217,11 @@ function keyPressed() {
  * Resets Doodler vx if neither of LEFT or RIGHT is pressed
  */
 function keyReleased() {
-    if (!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW) && doodler.vx != 0) {
+    if (!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW) && !keyIsDown(65) && !keyIsDown(68) && doodler.vx != 0) {
         doodler.vx = 0;
     }
 }
+
 
 /**
  * Touch event mobile
