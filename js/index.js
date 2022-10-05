@@ -27,7 +27,7 @@ const sound = {
     jump: null,
     spring: null,
     fragile: null,
-    falling: null
+    falling: null,
 };
 
 /**
@@ -35,7 +35,11 @@ const sound = {
  * For loading static resources before setup
  */
 function preload() {
-    const baseUrl = "..";
+    const isLocalHost =
+        location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    const baseUrl = isLocalHost
+        ? ".."
+        : "https://takosenpai2687.github.io/doodlejump";
     Doodler.leftImage = loadImage(baseUrl + "/assets/img/doodler_left.png");
     Doodler.rightImage = loadImage(baseUrl + "/assets/img/doodler_right.png");
     Platform.springImage = loadImage(baseUrl + "/assets/img/spring.png");
@@ -72,7 +76,7 @@ function draw() {
     // Render blackhole
     blackhole && blackhole.render();
     // Draw all platforms
-    platforms.forEach(plat => {
+    platforms.forEach((plat) => {
         plat.render();
         // For springs : check Collision with the falling doodler
         if (
@@ -82,7 +86,7 @@ function draw() {
                 x: plat.x + plat.springX,
                 y: plat.y + plat.springY,
                 w: Platform.springW,
-                h: Platform.springH
+                h: Platform.springH,
             })
         ) {
             sound.spring.play();
@@ -127,7 +131,7 @@ function draw() {
             // check death from blackhole
             blackhole &&
             dist(doodler.x, doodler.y, blackhole.x, blackhole.y) <
-            Blackhole.ROCHE_LIMIT
+                Blackhole.ROCHE_LIMIT
         ) {
             isOver = true;
             doodler.vx = 0;
@@ -158,7 +162,9 @@ function draw() {
                         plat.type !== Platform.platformTypes.INVISIBLE
                     ) {
                         // Random  x
-                        let x = Platform.w / 2 + (width - Platform.w) * Math.random();
+                        let x =
+                            Platform.w / 2 +
+                            (width - Platform.w) * Math.random();
                         // One screen height off for y
                         let y = plat.y - (config.STEPS + 1) * stepSize;
                         // Random type
@@ -182,8 +188,14 @@ function draw() {
                             platforms.push(new Platform(x, y, type, springed));
                         }
                         // for other types there's a chance to generate blackhole
-                        else if (!blackhole && Math.random() < config.BLACKHOLE_CHANCE) {
-                            blackhole = new Blackhole((x + width / 2) % width, y);
+                        else if (
+                            !blackhole &&
+                            Math.random() < config.BLACKHOLE_CHANCE
+                        ) {
+                            blackhole = new Blackhole(
+                                (x + width / 2) % width,
+                                y
+                            );
                         }
                     } else {
                         // Fragile & Invisible just remove
@@ -203,10 +215,16 @@ function draw() {
  */
 function keyPressed() {
     if (isOver) return;
-    if ((keyCode === LEFT_ARROW || keyCode === 65) && doodler.vx !== -Doodler.speed) {
+    if (
+        (keyCode === LEFT_ARROW || keyCode === 65) &&
+        doodler.vx !== -Doodler.speed
+    ) {
         doodler.vx = -Doodler.speed;
         doodler.direction = Doodler.Direction.LEFT;
-    } else if ((keyCode === RIGHT_ARROW || keyCode === 68) && doodler.vx !== Doodler.speed) {
+    } else if (
+        (keyCode === RIGHT_ARROW || keyCode === 68) &&
+        doodler.vx !== Doodler.speed
+    ) {
         doodler.vx = Doodler.speed;
         doodler.direction = Doodler.Direction.RIGHT;
     }
@@ -217,7 +235,13 @@ function keyPressed() {
  * Resets Doodler vx if neither of LEFT or RIGHT is pressed
  */
 function keyReleased() {
-    if (!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW) && !keyIsDown(65) && !keyIsDown(68) && doodler.vx != 0) {
+    if (
+        !keyIsDown(LEFT_ARROW) &&
+        !keyIsDown(RIGHT_ARROW) &&
+        !keyIsDown(65) &&
+        !keyIsDown(68) &&
+        doodler.vx != 0
+    ) {
         doodler.vx = 0;
     }
 }

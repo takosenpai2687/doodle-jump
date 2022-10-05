@@ -44,9 +44,9 @@ canvas, P5Js Library
 
 Occasional minor bugs when window resized.
 
-iPad full screen support missing.
-
 # Updates
+
+## 2022.10.5 Major Update: Fixed bugs for smaller screens.
 
 ## 2020.06.29 Smoothened mobile experience by supporting touch moving. Optimized random platform generating distance. Made player falling speed faster than jumping up.
 
@@ -56,7 +56,7 @@ iPad full screen support missing.
 
 # Developer
 
-Jeremy9863
+takosenpai2687
 
 # Credits
 
