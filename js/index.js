@@ -281,13 +281,26 @@ function touchEnded() {
  * Window resized event hook, keep 16:9
  */
 function windowResized() {
-    console.log("hi");
     stepSize = windowHeight / config.STEPS;
     isMobile = window.matchMedia("only screen and (max-width: 768px)").matches;
     if (!isMobile) {
         resizeCanvas((windowHeight * 9) / 16, windowHeight);
     }
     cell = windowHeight / 30;
+
+    // Set doodler props
+    if (height > 0) {
+        const REF_HEIGHT = 1289;
+        const heightRatio = height / REF_HEIGHT;
+        Doodler.jumpForce *= heightRatio;
+        Doodler.superJumpForce *= heightRatio;
+        config.GRAVITY *= heightRatio;
+    }
+    if (width > 0) {
+        const REF_WIDTH = 725;
+        const widthRatio = width / REF_WIDTH;
+        Doodler.speed *= widthRatio;
+    }
 }
 
 // utils
