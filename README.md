@@ -1,3 +1,7 @@
+# Recent Update
+
+### 2022.10.5 Major Update: Fixed bugs for smaller screens. Now doodler behaves the same on all screens!
+
 # Introduction
 
 _Doodle Jump_ (https://en.wikipedia.org/wiki/Doodle_Jump) is a platforming video game, popular on multiple platforms for many years. It was initially developed and published by American studio Lima Sky.
@@ -46,13 +50,13 @@ Occasional minor bugs when window resized.
 
 # Updates
 
-## 2022.10.5 Major Update: Fixed bugs for smaller screens.
+### 2022.10.5 Major Update: Fixed bugs for smaller screens. Now doodler behaves the same on all screens!
 
-## 2020.06.29 Smoothened mobile experience by supporting touch moving. Optimized random platform generating distance. Made player falling speed faster than jumping up.
+### 2020.06.29 Smoothened mobile experience by supporting touch moving. Optimized random platform generating distance. Made player falling speed faster than jumping up.
 
-## 2020.06.24 Added mobile devices full screen and touch event support. Minor bug fixes.
+### 2020.06.24 Added mobile devices full screen and touch event support. Minor bug fixes.
 
-## 2020.06.24 Project launched
+### 2020.06.24 Project launched
 
 # Developer
 
