@@ -5,8 +5,8 @@ class Platform {
     // Horizontal speed scalar
     static speed = 2;
     // Spring dimensions
-    static springW = 15;
-    static springH = 12;
+    static springW = 14;
+    static springH = 14;
     // Image handle
     static springImage;
 
