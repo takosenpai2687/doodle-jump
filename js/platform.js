@@ -1,7 +1,7 @@
 class Platform {
     // Collision box dimensions
-    static w = 80;
-    static h = 20;
+    static w = 110;
+    static h = 28;
     // Horizontal speed scalar
     static speed = 2;
     // Spring dimensions

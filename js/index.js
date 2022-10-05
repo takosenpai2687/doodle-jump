@@ -294,15 +294,25 @@ function windowResized() {
     if (height > 0) {
         const REF_HEIGHT = 1289;
         const heightRatio = height / REF_HEIGHT;
+        // Scale movement heights
         Doodler.jumpForce *= heightRatio;
         Doodler.superJumpForce *= heightRatio;
         config.GRAVITY *= heightRatio;
         config.MAX_FALLING_SPEED *= heightRatio;
+        // Scale render heights
+        Doodler.h *= heightRatio;
+        Platform.h *= heightRatio;
+        Platform.springH *= heightRatio;
     }
     if (width > 0) {
         const REF_WIDTH = 725;
         const widthRatio = width / REF_WIDTH;
+        // Scale movement widths
         Doodler.speed *= widthRatio;
+        // Scale render widths
+        Doodler.w *= widthRatio;
+        Platform.w *= widthRatio;
+        Platform.springW *= widthRatio;
     }
 }
 

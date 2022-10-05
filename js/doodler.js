@@ -10,8 +10,8 @@ class Doodler {
     };
 
     // Collision box dimensions
-    static w = 60;
-    static h = 60;
+    static w = 80;
+    static h = 80;
     // Vertical jump force
     static jumpForce = 8;
     // Vertical spring jump force
