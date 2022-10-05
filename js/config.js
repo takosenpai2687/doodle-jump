@@ -15,5 +15,7 @@ const config = {
     // Chance of springed platform spawn rate
     SPRINGED_CHANCE: 0.1,
     // Chance of blackhole
-    BLACKHOLE_CHANCE: 1
+    BLACKHOLE_CHANCE: 1,
+    // Max falling speed
+    MAX_FALLING_SPEED: 10,
 };

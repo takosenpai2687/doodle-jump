@@ -150,63 +150,65 @@ function draw() {
             // If so, move blackhole and all other platforms down
             // opposite speed of doodler
             blackhole && (blackhole.y -= doodler.vy);
-            platforms.forEach((plat, i) => {
-                plat.y -= doodler.vy;
-                // Gain score
-                score++;
-                // re-render the bottom non-fragile & non-invisible platform to the top
-                // reset position and type
-                if (plat.y > height) {
-                    if (
-                        plat.type !== Platform.platformTypes.FRAGILE &&
-                        plat.type !== Platform.platformTypes.INVISIBLE
-                    ) {
-                        // Random  x
-                        let x =
-                            Platform.w / 2 +
-                            (width - Platform.w) * Math.random();
-                        // One screen height off for y
-                        let y = plat.y - (config.STEPS + 1) * stepSize;
-                        // Random type
-                        let type = Platform.platformTypes.getRandomType();
-                        // Random springed
-                        let springed = Math.random() < config.SPRINGED_CHANCE;
-                        // Remove current
-                        platforms.splice(i, 1);
-                        // Add new
-                        platforms.push(new Platform(x, y, type, springed));
-                        // If got a fragile one, go add another stable one aside
-                        // In case player have nowhere to go
-                        if (type === Platform.platformTypes.FRAGILE) {
-                            // 1/3 offset for the x
-                            x = (x + width / 3) % width;
-                            // Stable type
-                            type = Platform.platformTypes.STABLE;
-                            // Random springed
-                            springed = Math.random() < config.SPRINGED_CHANCE;
-                            // add stable next to the fragile
-                            platforms.push(new Platform(x, y, type, springed));
-                        }
-                        // for other types there's a chance to generate blackhole
-                        else if (
-                            !blackhole &&
-                            Math.random() < config.BLACKHOLE_CHANCE
-                        ) {
-                            blackhole = new Blackhole(
-                                (x + width / 2) % width,
-                                y
-                            );
-                        }
-                    } else {
-                        // Fragile & Invisible just remove
-                        platforms.splice(i, 1);
-                    }
-                }
-            });
+            updatePlatforms();
         }
     } else {
         drawDead();
     }
+}
+
+/**
+ * Update platforms in response to doodler movement
+ */
+function updatePlatforms() {
+    platforms.forEach((plat, i) => {
+        plat.y -= doodler.vy;
+        // Gain score
+        score++;
+        // re-render the bottom non-fragile & non-invisible platform to the top
+        // reset position and type
+        if (plat.y > height) {
+            if (
+                plat.type !== Platform.platformTypes.FRAGILE &&
+                plat.type !== Platform.platformTypes.INVISIBLE
+            ) {
+                // Random  x
+                let x = Platform.w / 2 + (width - Platform.w) * Math.random();
+                // One screen height off for y
+                let y = plat.y - (config.STEPS + 1) * stepSize;
+                // Random type
+                let type = Platform.platformTypes.getRandomType();
+                // Random springed
+                let springed = Math.random() < config.SPRINGED_CHANCE;
+                // Remove current
+                platforms.splice(i, 1);
+                // Add new
+                platforms.push(new Platform(x, y, type, springed));
+                // If got a fragile one, go add another stable one aside
+                // In case player have nowhere to go
+                if (type === Platform.platformTypes.FRAGILE) {
+                    // 1/3 offset for the x
+                    x = (x + width / 3) % width;
+                    // Stable type
+                    type = Platform.platformTypes.STABLE;
+                    // Random springed
+                    springed = Math.random() < config.SPRINGED_CHANCE;
+                    // add stable next to the fragile
+                    platforms.push(new Platform(x, y, type, springed));
+                }
+                // for other types there's a chance to generate blackhole
+                else if (
+                    !blackhole &&
+                    Math.random() < config.BLACKHOLE_CHANCE
+                ) {
+                    blackhole = new Blackhole((x + width / 2) % width, y);
+                }
+            } else {
+                // Fragile & Invisible just remove
+                platforms.splice(i, 1);
+            }
+        }
+    });
 }
 
 /**
@@ -295,6 +297,7 @@ function windowResized() {
         Doodler.jumpForce *= heightRatio;
         Doodler.superJumpForce *= heightRatio;
         config.GRAVITY *= heightRatio;
+        config.MAX_FALLING_SPEED *= heightRatio;
     }
     if (width > 0) {
         const REF_WIDTH = 725;
