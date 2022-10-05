@@ -11,7 +11,7 @@ const config = {
     // Minimum value of the distance between Doodler and screen top
     THRESHOLD: 300,
     // Number of stairs per screen
-    STEPS: 8,
+    STEPS: 9,
     // Chance of springed platform spawn rate
     SPRINGED_CHANCE: 0.1,
     // Chance of blackhole
