@@ -1,3 +1,5 @@
+# CLICK [HERE](https://takosenpai2687.github.io/doodle-jump/) TO PLAY ONLINE
+
 # Recent Update
 
 ### 2022.10.5 Major Update: Fixed bugs for smaller screens. Now doodler behaves the same on all screens!
@@ -7,8 +9,6 @@
 _Doodle Jump_ (https://en.wikipedia.org/wiki/Doodle_Jump) is a platforming video game, popular on multiple platforms for many years. It was initially developed and published by American studio Lima Sky.
 
 This project is a Javascript replica of the video game _Doodle Jump_ mentioned above. The project is mainly developed using Javascript with the help of p5Js library. _See also https://p5js.org/_
-
-# CLICK [HERE](https://takosenpai2687.github.io/doodle-jump/) TO PLAY ONLINE
 
 # How to Play
 
