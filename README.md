@@ -2,8 +2,6 @@
 
 # Recent Update
 
-### 2023.02.17 Fixed a bug where iOS devices cannot load due to an outdated dependency.
-
 ### 2022.10.5 Major Update: Fixed bugs for smaller screens. Now doodler behaves the same on all screens!
 
 # Introduction
@@ -51,8 +49,6 @@ canvas, P5Js Library
 Occasional minor bugs when window resized.
 
 # Updates
-
-### 2023.02.17 Fixed a bug where iOS devices cannot load due to an outdated dependency.
 
 ### 2022.10.5 Major Update: Fixed bugs for smaller screens. Now doodler behaves the same on all screens!
 
