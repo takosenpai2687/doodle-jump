@@ -1,4 +1,4 @@
-# CLICK [HERE](https://takosenpai2687.github.io/doodle-jump/) TO PLAY ONLINE
+# CLICK [HERE](https://takosenpai2687.github.io/doodle-jump/) TO PLAY ONLINE (Not Supporting iOS as of yet)
 
 # Recent Update
 
