@@ -21,6 +21,14 @@ var stepSize;
 var isMobile;
 // Background grid cell size
 var cell;
+// Replay button
+var replayButton = {
+    x: 0,
+    y: 0,
+    w: 160,
+    h: 50,
+    visible: false
+};
 
 const sound = {
     blackhole: null,
@@ -121,16 +129,19 @@ function draw() {
     drawScore();
     if (!isOver) {
         // Render the doodler
-        doodler.render();
-        doodler.update();
+        if (doodler) {
+            doodler.render();
+            doodler.update();
+        }
         // check death from falling
-        if (doodler.y >= height) {
+        if (doodler && doodler.y >= height) {
             isOver = true;
             doodler.vx = 0;
             doodler.vy = 0;
             sound.falling.play();
         } else if (
             // check death from blackhole
+            doodler &&
             blackhole &&
             dist(doodler.x, doodler.y, blackhole.x, blackhole.y) <
                 Blackhole.ROCHE_LIMIT
@@ -148,7 +159,7 @@ function draw() {
             blackhole = null;
         }
         // Restrain doodler from going up above the THRESHOLD=100
-        if (doodler.y <= config.THRESHOLD && doodler.vy < 0) {
+        if (doodler && doodler.y <= config.THRESHOLD && doodler.vy < 0) {
             // If so, move blackhole and all other platforms down
             // opposite speed of doodler
             blackhole && (blackhole.y -= doodler.vy);
@@ -292,11 +303,32 @@ function touchEnded() {
     if (event) {
         event.preventDefault();
     }
+    
+    // Check if replay button was clicked
+    if (replayButton.visible && isOver) {
+        if (dist(mouseX, mouseY, replayButton.x, replayButton.y) <= replayButton.w / 2 + replayButton.h) {
+            resetGame();
+            return false;
+        }
+    }
+    
     if (doodler.vx != 0) {
         doodler.vx = 0;
     }
     // Return false to prevent default behavior
     return false;
+}
+
+/**
+ * Mouse pressed event for replay button
+ */
+function mousePressed() {
+    // Check if replay button was clicked
+    if (replayButton.visible && isOver) {
+        if (dist(mouseX, mouseY, replayButton.x, replayButton.y) <= replayButton.w / 2 + replayButton.h) {
+            resetGame();
+        }
+    }
 }
 
 /**
@@ -336,6 +368,60 @@ function windowResized() {
     }
 }
 
+/**
+ * Reset game to initial state
+ */
+function resetGame() {
+    // CRITICAL: Stop death animation immediately by clearing death states first
+    isOver = false;
+    isBlackholed = false;
+    paused = false;
+    
+    // Hide replay button immediately
+    replayButton.visible = false;
+    
+    // Clear arrays and objects BEFORE resetting dimensions
+    platforms = [];
+    blackhole = null;
+    doodler = null;  // Clear doodler to prevent any lingering references
+    
+    // Reset score
+    score = 0;
+    
+    // Reset static class properties to base values
+    // These need to be reset because windowResized modifies them
+    Doodler.w = 80;
+    Doodler.h = 80;
+    Doodler.jumpForce = 8.15;
+    Doodler.superJumpForce = 14;
+    Doodler.speed = 7.2;
+    
+    Platform.w = 110;
+    Platform.h = 28;
+    Platform.speed = 2;
+    Platform.springW = 14;
+    Platform.springH = 14;
+    
+    // Reset config values
+    config.GRAVITY = 0.16;
+    config.MAX_FALLING_SPEED = 10;
+    
+    // Recalculate dimensions based on current screen size
+    windowResized();
+    
+    // Regenerate platforms
+    generatePlatforms();
+    
+    // Recreate doodler at starting position
+    doodler = new Doodler(
+        platforms[platforms.length - 2].x,
+        platforms[platforms.length - 2].y - Doodler.h / 2 - Platform.h / 2
+    );
+    
+    // Re-enable audio context for iOS (in case it was suspended)
+    userStartAudio();
+}
+
 // utils
 
 /**
@@ -359,18 +445,27 @@ function drawBackground() {
  * Draw score on the top right
  */
 function drawScore() {
-    const fontSize = 24;
+    const fontSize = 28;
     const scoreStr = `SCORE: ${score.toLocaleString()}`;
+    textSize(fontSize);
+    textStyle(BOLD);
     const strWidth = textWidth(scoreStr);
     let margin = 10;
-    textSize(fontSize);
-    textStyle(NORMAL);
+    
+    // Ensure score doesn't overflow - adjust positioning if needed
+    let scoreX = width - strWidth - margin;
+    if (scoreX < margin) {
+        // If score would overflow, position it with minimum margin
+        scoreX = margin;
+    }
+    
     textAlign(LEFT);
     fill(60);
     noStroke();
-    text(scoreStr, width - strWidth - margin, margin + fontSize);
+    text(scoreStr, scoreX, margin + fontSize);
     // draw copy right
-    textStyle(ITALIC);
+    textStyle(NORMAL);
+    textSize(14);
     text("Author: github.com/takosenpai2687", margin, height - margin);
     // draw FPS
     text("FPS: " + Math.floor(frameRate()) || 0, margin, height - 30);
@@ -413,9 +508,92 @@ function generatePlatforms() {
  * Keep falling until no platforms or blackhole in sight
  */
 function drawDead() {
+    // Safety check - if game was restarted, don't run death animation
+    if (!isOver) {
+        return;
+    }
+    
     if (!platforms.length && !blackhole) {
+        // Show Game Over text with bold font
         textAlign(CENTER);
-        text("Game Over!", width / 2, height / 2);
+        textStyle(BOLD);
+        textSize(48);
+        fill(60);
+        noStroke();
+        text("GAME OVER!", width / 2, height / 2 - 60);
+        
+        // Show final score
+        textSize(32);
+        text(`Final Score: ${score.toLocaleString()}`, width / 2, height / 2);
+        
+        // Draw restart button (platform-style)
+        replayButton.x = width / 2;
+        replayButton.y = height / 2 + 70;
+        replayButton.visible = true;
+        
+        // Draw filled platform shape
+        noStroke();
+        rectMode(RADIUS);
+        fill(Platform.platformTypes.getColor(Platform.platformTypes.STABLE));
+        
+        // Middle rectangle
+        rect(replayButton.x, replayButton.y, replayButton.w / 2, replayButton.h / 2);
+        
+        // Left semicircle (filled)
+        ellipse(replayButton.x - replayButton.w / 2, replayButton.y, replayButton.h, replayButton.h);
+        
+        // Right semicircle (filled)
+        ellipse(replayButton.x + replayButton.w / 2, replayButton.y, replayButton.h, replayButton.h);
+        
+        // Draw border arcs with thick stroke
+        stroke(0);
+        strokeWeight(4);
+        
+        // Left arc border
+        arc(
+            replayButton.x - replayButton.w / 2,
+            replayButton.y,
+            replayButton.h,
+            replayButton.h,
+            HALF_PI,
+            HALF_PI + PI,
+            OPEN
+        );
+        
+        // Right arc border
+        arc(
+            replayButton.x + replayButton.w / 2,
+            replayButton.y,
+            replayButton.h,
+            replayButton.h,
+            HALF_PI + PI,
+            HALF_PI,
+            OPEN
+        );
+        
+        // Top line border
+        line(
+            replayButton.x - replayButton.w / 2,
+            replayButton.y - replayButton.h / 2,
+            replayButton.x + replayButton.w / 2,
+            replayButton.y - replayButton.h / 2
+        );
+        
+        // Bottom line border
+        line(
+            replayButton.x - replayButton.w / 2,
+            replayButton.y + replayButton.h / 2,
+            replayButton.x + replayButton.w / 2,
+            replayButton.y + replayButton.h / 2
+        );
+        
+        // Draw button text
+        textAlign(CENTER, CENTER);
+        textStyle(BOLD);
+        textSize(24);
+        fill(255);
+        noStroke();
+        text("RESTART", replayButton.x, replayButton.y);
     } else if (!isBlackholed) {
         // Still falling
         doodler.render();

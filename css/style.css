@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
 
 * {
   margin: 0;
@@ -13,7 +13,7 @@
 html,
 body {
   height: 100%;
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
   overflow: hidden;
   position: fixed;
   width: 100%;
