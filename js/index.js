@@ -65,6 +65,8 @@ function setup() {
         platforms[platforms.length - 2].x,
         platforms[platforms.length - 2].y - Doodler.h / 2 - Platform.h / 2
     );
+    // Enable audio for iOS devices
+    userStartAudio();
 }
 
 /**
@@ -252,6 +254,10 @@ function keyReleased() {
  * Touch event mobile
  */
 function touchStarted() {
+    // Prevent default iOS behaviors like scrolling, zooming, etc.
+    if (event) {
+        event.preventDefault();
+    }
     // LEFT
     if (mouseX < width / 2 && doodler.vx !== -Doodler.speed) {
         doodler.vx = -Doodler.speed;
@@ -261,22 +267,36 @@ function touchStarted() {
         doodler.vx = Doodler.speed;
         doodler.direction = Doodler.Direction.RIGHT;
     }
+    // Return false to prevent default behavior
+    return false;
 }
 
 /**
  * Touch moved event mobile
  */
 function touchMoved() {
+    // Prevent default iOS behaviors like scrolling
+    if (event) {
+        event.preventDefault();
+    }
     touchStarted();
+    // Return false to prevent default behavior
+    return false;
 }
 
 /**
  * Touch end event mobile
  */
 function touchEnded() {
+    // Prevent default iOS behaviors
+    if (event) {
+        event.preventDefault();
+    }
     if (doodler.vx != 0) {
         doodler.vx = 0;
     }
+    // Return false to prevent default behavior
+    return false;
 }
 
 /**

@@ -1,6 +1,8 @@
-# CLICK [HERE](https://takosenpai2687.github.io/doodle-jump/) TO PLAY ONLINE (Not Supporting iOS as of yet)
+# CLICK [HERE](https://takosenpai2687.github.io/doodle-jump/) TO PLAY ONLINE
 
 # Recent Update
+
+### 2026.01.14 Major Update: Upgraded dependencies and fixed iOS device support! Now fully compatible with iOS devices.
 
 ### 2022.10.5 Major Update: Fixed bugs for smaller screens. Now doodler behaves the same on all screens!
 
@@ -49,6 +51,16 @@ canvas, P5Js Library
 Occasional minor bugs when window resized.
 
 # Updates
+
+### 2026.01.14 Major Update: Upgraded dependencies and fixed iOS device support! Now fully compatible with iOS devices.
+
+- Upgraded p5.js from v1.5.0 to v1.11.2
+- Upgraded p5.sound.js from v1.0.1 to v1.11.2
+- Added iOS audio context unlock mechanism with `userStartAudio()`
+- Enhanced iOS viewport meta tags for better mobile experience
+- Added iOS-specific CSS to prevent unwanted touch behaviors
+- Fixed touch event handlers with proper iOS event prevention
+- Removed iOS limitation notice from documentation
 
 ### 2022.10.5 Major Update: Fixed bugs for smaller screens. Now doodler behaves the same on all screens!
 
