@@ -38,26 +38,31 @@ const sound = {
     falling: null,
 };
 
+// Safely play a sound — iOS may fail to load audio, guard against null/errors
+function playSound(s) {
+    try { if (s && s.isLoaded()) s.play(); } catch (e) {}
+}
+
 /**
  * Preload event hook
  * For loading static resources before setup
  */
 function preload() {
-    const isLocalHost =
-        location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    const baseUrl = isLocalHost
-        ? ".."
-        : "https://takosenpai2687.github.io/doodle-jump";
-    Doodler.leftImage = loadImage(baseUrl + "/assets/img/doodler_left.png");
-    Doodler.rightImage = loadImage(baseUrl + "/assets/img/doodler_right.png");
-    Platform.springImage = loadImage(baseUrl + "/assets/img/spring.png");
-    Blackhole.blackholeImg = loadImage(baseUrl + "/assets/img/hole.png");
+    Doodler.leftImage = loadImage("./assets/img/doodler_left.png");
+    Doodler.rightImage = loadImage("./assets/img/doodler_right.png");
+    Platform.springImage = loadImage("./assets/img/spring.png");
+    Blackhole.blackholeImg = loadImage("./assets/img/hole.png");
+    // On iOS (WebKit), Web Audio is restricted and loadSound() may never
+    // fire a completion callback, causing preload() to hang forever.
+    // Providing a no-op error callback lets p5.js mark each sound as done
+    // even when the browser blocks or fails to load audio.
+    var noop = function() {};
     soundFormats("mp3", "wav");
-    sound.blackhole = loadSound(baseUrl + "/assets/sound/blackhole.mp3");
-    sound.jump = loadSound(baseUrl + "/assets/sound/jump.wav");
-    sound.spring = loadSound(baseUrl + "/assets/sound/spring.mp3");
-    sound.fragile = loadSound(baseUrl + "/assets/sound/fragile.mp3");
-    sound.falling = loadSound(baseUrl + "/assets/sound/falling.mp3");
+    sound.blackhole = loadSound("./assets/sound/blackhole.mp3", noop, noop);
+    sound.jump = loadSound("./assets/sound/jump.wav", noop, noop);
+    sound.spring = loadSound("./assets/sound/spring.mp3", noop, noop);
+    sound.fragile = loadSound("./assets/sound/fragile.mp3", noop, noop);
+    sound.falling = loadSound("./assets/sound/falling.mp3", noop, noop);
 }
 
 /**
@@ -99,7 +104,7 @@ function draw() {
                 h: Platform.springH,
             })
         ) {
-            sound.spring.play();
+            playSound(sound.spring);
             doodler.vy = -Doodler.superJumpForce;
         }
         // For non-invisible platforms : check collision with the falling doodler
@@ -115,9 +120,9 @@ function draw() {
             if (plat.type === Platform.platformTypes.FRAGILE) {
                 plat.type = Platform.platformTypes.INVISIBLE;
                 plat.springed = false;
-                sound.fragile.play();
+                playSound(sound.fragile);
             } else {
-                sound.jump.play();
+                playSound(sound.jump);
             }
         }
         // Update moving platforms and blackholes
@@ -138,7 +143,7 @@ function draw() {
             isOver = true;
             doodler.vx = 0;
             doodler.vy = 0;
-            sound.falling.play();
+            playSound(sound.falling);
         } else if (
             // check death from blackhole
             doodler &&
@@ -152,7 +157,7 @@ function draw() {
             doodler.x = blackhole.x;
             doodler.y = blackhole.y;
             isBlackholed = true;
-            sound.blackhole.play();
+            playSound(sound.blackhole);
         }
         // check blackhole out of bounds
         if (blackhole && blackhole.y > height) {
